@@ -3,7 +3,49 @@ import {
   Menu, X, Search, Mic, Plus, Settings, Sun, Moon, Lock, LockKeyhole,
   UserRound, KeyRound, Phone, Mail, MapPin, CreditCard, BookMarked,
   Trash2, Copy, Check, ChevronRight, SquarePen, LayoutGrid, Eye, EyeOff,
+  Zap, Sparkle,
 } from 'lucide-react';
+
+// לוגו: המוח עם ניצוצות חשמל יוצאים ממנו, כמו בסקיצה של המשתמש
+const LOGO_BOLTS = [
+  { top: '-10%', left: '-24%', rot: -35, scale: 0.42 },
+  { top: '-26%', left: '32%', rot: 4, scale: 0.34 },
+  { top: '-4%', left: '80%', rot: 40, scale: 0.46 },
+  { top: '58%', left: '-26%', rot: -55, scale: 0.38 },
+  { top: '68%', left: '84%', rot: 32, scale: 0.42 },
+];
+const LOGO_SPARKLES = [
+  { top: '8%', left: '94%', scale: 0.2 },
+  { top: '80%', left: '2%', scale: 0.16 },
+];
+
+function BrainLogo({ size = 72 }) {
+  return (
+    <div className="relative inline-flex items-center justify-center shrink-0" style={{ width: size, height: size }}>
+      <div className="absolute inset-0 blur-2xl bg-[#7e14ff]/40 rounded-full scale-150" />
+      <span className="relative select-none" style={{ fontSize: size * 0.72, lineHeight: 1 }}>🧠</span>
+      {LOGO_BOLTS.map((b, i) => (
+        <Zap
+          key={i}
+          size={Math.round(size * b.scale)}
+          fill="white"
+          strokeWidth={1.5}
+          className="absolute text-white drop-shadow-[0_0_4px_rgba(255,255,255,0.9)]"
+          style={{ top: b.top, left: b.left, transform: `rotate(${b.rot}deg)` }}
+        />
+      ))}
+      {LOGO_SPARKLES.map((s, i) => (
+        <Sparkle
+          key={i}
+          size={Math.round(size * s.scale)}
+          fill="white"
+          className="absolute text-white drop-shadow-[0_0_3px_rgba(255,255,255,0.9)]"
+          style={{ top: s.top, left: s.left }}
+        />
+      ))}
+    </div>
+  );
+}
 
 // --- Constants ---
 const STORAGE_KEY = 'memoryAppData_v1'; // מפתח לשמירה ב-localStorage
@@ -106,9 +148,9 @@ export default function App() {
     row: isLight ? 'hover:bg-gray-100' : 'hover:bg-white/5',
     input: isLight ? 'bg-gray-100 text-gray-900 placeholder-gray-400 border-gray-200' : 'bg-white/5 text-white placeholder-gray-500 border-white/10',
     pillBg: isLight ? 'bg-gray-100 border-gray-200' : 'bg-white/5 border-white/10',
-    iconBtn: isLight ? 'bg-gray-100 hover:bg-gray-200 text-gray-700' : 'bg-white/10 hover:bg-white/20 text-white',
-    divider: isLight ? 'bg-gray-200' : 'bg-white/15',
-    accent: 'text-[#a78bfa]',
+    iconBtn: isLight ? 'bg-gray-100 hover:bg-gray-200 text-black' : 'bg-white/10 hover:bg-white/20 text-white',
+    iconColor: isLight ? 'text-black' : 'text-white',
+    iconCircleBg: isLight ? 'bg-gray-100' : 'bg-white/10',
     accentBg: 'bg-[#7e14ff]',
     scrim: 'bg-black/60',
   };
@@ -210,8 +252,8 @@ export default function App() {
           setActiveModal('detail');
         }}
       >
-        <div className={`shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${isLight ? 'bg-purple-50' : 'bg-white/10'}`}>
-          <Icon size={18} className={t.accent} />
+        <div className={`shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${t.iconCircleBg}`}>
+          <Icon size={18} className={t.iconColor} />
         </div>
         <div className="min-w-0 flex-1">
           <div className={`text-sm font-medium truncate ${t.text}`}>{mem.subject}</div>
@@ -229,9 +271,8 @@ export default function App() {
     return (
       <div className={`min-h-screen w-full flex items-center justify-center ${isLight ? 'bg-gray-100' : 'bg-black'} p-4`} dir="rtl">
         <div className={`relative w-full max-w-[430px] min-h-[820px] max-h-[92vh] rounded-[2.5rem] overflow-hidden shadow-2xl ${t.frameBg} flex flex-col items-center justify-center px-8`}>
-          <div className="relative mb-6">
-            <div className="absolute inset-0 blur-2xl bg-[#7e14ff]/40 rounded-full scale-150" />
-            <div className="relative text-6xl">🧠</div>
+          <div className="mb-6">
+            <BrainLogo size={88} />
           </div>
           <h1 className={`text-lg font-bold mb-1 ${t.text}`}>Bob נעול</h1>
           <p className={`text-sm mb-6 ${t.muted}`}>הזן את הקוד בן 4 הספרות כדי להיכנס</p>
@@ -280,14 +321,13 @@ export default function App() {
           <div className="relative flex flex-col items-center pt-10 pb-4 px-4">
             <button
               onClick={() => setMenuOpen(true)}
-              className={`absolute top-4 left-4 p-2 rounded-full transition-colors ${t.iconBtn}`}
+              className={`absolute top-4 right-4 p-2 rounded-full transition-colors ${t.iconBtn}`}
               title="תפריט"
             >
               <Menu size={20} />
             </button>
-            <div className="relative mb-3">
-              <div className="absolute inset-0 blur-2xl bg-[#7e14ff]/40 rounded-full scale-150" />
-              <div className="relative text-5xl">🧠</div>
+            <div className="mb-3">
+              <BrainLogo size={72} />
             </div>
             <h1 className={`text-lg font-bold text-center px-6 ${t.text}`}>מה תרצה להזכיר לי היום?</h1>
           </div>
@@ -347,7 +387,7 @@ export default function App() {
           <div className={`absolute inset-0 z-30 flex flex-col ${t.frameBg}`}>
             <div className="flex items-center justify-between px-4 pt-6 pb-4">
               <div className="flex items-center gap-2">
-                <span className="text-xl">🧠</span>
+                <BrainLogo size={30} />
                 <span className={`font-bold ${t.text}`}>Bob</span>
               </div>
               <button onClick={() => setMenuOpen(false)} className={`p-2 rounded-full ${t.iconBtn}`}>
@@ -360,7 +400,7 @@ export default function App() {
                 onClick={() => { setMenuOpen(false); resetComposer(); setTimeout(() => composerRef.current?.focus(), 50); }}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${t.row}`}
               >
-                <SquarePen size={18} className={t.accent} />
+                <SquarePen size={18} className={t.iconColor} />
                 <span className={`text-sm ${t.text}`}>להזכיר משהו חדש</span>
               </button>
 
@@ -368,7 +408,7 @@ export default function App() {
                 onClick={() => setActiveModal('subjectSearch')}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${t.row}`}
               >
-                <Search size={18} className={t.accent} />
+                <Search size={18} className={t.iconColor} />
                 <span className={`text-sm ${t.text}`}>חיפוש מידע לפי נושא</span>
               </button>
 
@@ -376,7 +416,7 @@ export default function App() {
                 onClick={() => setActiveModal('generalSearch')}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${t.row}`}
               >
-                <LayoutGrid size={18} className={t.accent} />
+                <LayoutGrid size={18} className={t.iconColor} />
                 <span className={`text-sm ${t.text}`}>חיפוש מידע כללי</span>
               </button>
 
@@ -384,7 +424,7 @@ export default function App() {
                 onClick={() => showToast('בקרוב 🙂')}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${t.row}`}
               >
-                <Plus size={18} className={t.accent} />
+                <Plus size={18} className={t.iconColor} />
                 <span className={`text-sm ${t.text}`}>פתח טבלת אקסל עסקית</span>
               </button>
 
@@ -417,7 +457,7 @@ export default function App() {
                 onClick={() => setThemeMode((m) => (m === 'light' ? 'dark' : 'light'))}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${t.row}`}
               >
-                {isLight ? <Moon size={18} className={t.accent} /> : <Sun size={18} className={t.accent} />}
+                {isLight ? <Moon size={18} className={t.iconColor} /> : <Sun size={18} className={t.iconColor} />}
                 <span className={`text-sm ${t.text}`}>בהירות המסך</span>
               </button>
 
@@ -425,7 +465,7 @@ export default function App() {
                 onClick={() => setActiveModal('pin')}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${t.row}`}
               >
-                <Lock size={18} className={t.accent} />
+                <Lock size={18} className={t.iconColor} />
                 <span className={`text-sm ${t.text}`}>{pin ? 'שינוי קוד לאפליקציה' : 'יצירת קוד לאפליקציה'}</span>
               </button>
 
@@ -433,7 +473,7 @@ export default function App() {
                 onClick={() => setActiveModal('identity')}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${t.row}`}
               >
-                <UserRound size={18} className={t.accent} />
+                <UserRound size={18} className={t.iconColor} />
                 <span className={`text-sm ${t.text}`}>הזהות שלי</span>
               </button>
 
