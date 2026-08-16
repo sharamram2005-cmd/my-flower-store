@@ -6,17 +6,26 @@ import {
   Zap, Sparkle,
 } from 'lucide-react';
 
-// לוגו: המוח עם ניצוצות חשמל יוצאים ממנו, כמו בסקיצה של המשתמש
+// לוגו: המוח עם ניצוצות חשמל קטנים מאוד יוצאים ממנו, כמו בסקיצה של המשתמש
 const LOGO_BOLTS = [
-  { top: '-10%', left: '-24%', rot: -35, scale: 0.42 },
-  { top: '-26%', left: '32%', rot: 4, scale: 0.34 },
-  { top: '-4%', left: '80%', rot: 40, scale: 0.46 },
-  { top: '58%', left: '-26%', rot: -55, scale: 0.38 },
-  { top: '68%', left: '84%', rot: 32, scale: 0.42 },
+  { top: '0%', left: '-8%', rot: -35, scale: 0.15 },
+  { top: '-12%', left: '18%', rot: -5, scale: 0.13 },
+  { top: '-10%', left: '52%', rot: 20, scale: 0.14 },
+  { top: '4%', left: '90%', rot: 45, scale: 0.16 },
+  { top: '52%', left: '-10%', rot: -50, scale: 0.14 },
+  { top: '68%', left: '92%', rot: 30, scale: 0.15 },
+  { top: '86%', left: '58%', rot: 60, scale: 0.13 },
 ];
 const LOGO_SPARKLES = [
-  { top: '8%', left: '94%', scale: 0.2 },
-  { top: '80%', left: '2%', scale: 0.16 },
+  { top: '-16%', left: '8%', scale: 0.08 },
+  { top: '-8%', left: '38%', scale: 0.06 },
+  { top: '-14%', left: '74%', scale: 0.07 },
+  { top: '18%', left: '104%', scale: 0.08 },
+  { top: '48%', left: '-16%', scale: 0.06 },
+  { top: '58%', left: '106%', scale: 0.07 },
+  { top: '88%', left: '10%', scale: 0.08 },
+  { top: '94%', left: '78%', scale: 0.06 },
+  { top: '30%', left: '-14%', scale: 0.06 },
 ];
 
 function BrainLogo({ size = 72 }) {
@@ -436,7 +445,7 @@ export default function App() {
               )}
             </div>
 
-            <div className="px-4 pb-6 pt-2">
+            <div className="px-4 pb-10 pt-2">
               <button
                 onClick={() => setSettingsOpen(true)}
                 className={`p-3 rounded-full ${t.iconBtn}`}
