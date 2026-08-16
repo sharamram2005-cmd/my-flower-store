@@ -236,8 +236,8 @@ export default function App() {
   // =========================================================================
   if (locked) {
     return (
-      <div className={`min-h-screen w-full flex items-center justify-center ${isLight ? 'bg-gray-100' : 'bg-black'} p-4`} dir="rtl">
-        <div className={`relative w-full max-w-[430px] min-h-[820px] max-h-[92vh] rounded-[2.5rem] overflow-hidden shadow-2xl ${t.frameBg} flex flex-col items-center justify-center px-8`}>
+      <div className={`h-[100dvh] w-full flex items-center justify-center ${isLight ? 'bg-gray-100' : 'bg-black'} p-4`} dir="rtl">
+        <div className={`relative w-full max-w-[430px] h-[820px] max-h-[92vh] rounded-[2.5rem] overflow-hidden shadow-2xl ${t.frameBg} flex flex-col items-center justify-center px-8`}>
           <div className="mb-6">
             <BrainLogo size={88} />
           </div>
@@ -279,8 +279,8 @@ export default function App() {
   // MAIN APP
   // =========================================================================
   return (
-    <div className={`min-h-screen w-full flex items-center justify-center ${isLight ? 'bg-gray-100' : 'bg-black'} p-0 sm:p-4`} dir="rtl">
-      <div className={`relative w-full max-w-[430px] min-h-screen sm:min-h-[820px] sm:max-h-[92vh] sm:rounded-[2.5rem] overflow-hidden shadow-2xl ${t.frameBg} ${t.text} flex flex-col`}>
+    <div className={`h-[100dvh] w-full flex items-center justify-center ${isLight ? 'bg-gray-100' : 'bg-black'} p-0 sm:p-4`} dir="rtl">
+      <div className={`relative w-full max-w-[430px] h-[100dvh] sm:h-[820px] sm:max-h-[92vh] sm:rounded-[2.5rem] overflow-hidden shadow-2xl ${t.frameBg} ${t.text} flex flex-col`}>
 
         {/* ================= HOME SCREEN ================= */}
         <div className="relative flex flex-col h-full">
