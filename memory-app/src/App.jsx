@@ -3,55 +3,13 @@ import {
   Menu, X, Search, Mic, Plus, Settings, Sun, Moon, Lock, LockKeyhole,
   UserRound, KeyRound, Phone, Mail, MapPin, CreditCard, BookMarked,
   Trash2, Copy, Check, ChevronRight, SquarePen, LayoutGrid, Eye, EyeOff,
-  Zap, Sparkle,
 } from 'lucide-react';
-
-// לוגו: המוח עם ניצוצות חשמל קטנים מאוד יוצאים ממנו, כמו בסקיצה של המשתמש
-const LOGO_BOLTS = [
-  { top: '0%', left: '-8%', rot: -35, scale: 0.15 },
-  { top: '-12%', left: '18%', rot: -5, scale: 0.13 },
-  { top: '-10%', left: '52%', rot: 20, scale: 0.14 },
-  { top: '4%', left: '90%', rot: 45, scale: 0.16 },
-  { top: '52%', left: '-10%', rot: -50, scale: 0.14 },
-  { top: '68%', left: '92%', rot: 30, scale: 0.15 },
-  { top: '86%', left: '58%', rot: 60, scale: 0.13 },
-];
-const LOGO_SPARKLES = [
-  { top: '-16%', left: '8%', scale: 0.08 },
-  { top: '-8%', left: '38%', scale: 0.06 },
-  { top: '-14%', left: '74%', scale: 0.07 },
-  { top: '18%', left: '104%', scale: 0.08 },
-  { top: '48%', left: '-16%', scale: 0.06 },
-  { top: '58%', left: '106%', scale: 0.07 },
-  { top: '88%', left: '10%', scale: 0.08 },
-  { top: '94%', left: '78%', scale: 0.06 },
-  { top: '30%', left: '-14%', scale: 0.06 },
-];
 
 function BrainLogo({ size = 72 }) {
   return (
     <div className="relative inline-flex items-center justify-center shrink-0" style={{ width: size, height: size }}>
       <div className="absolute inset-0 blur-2xl bg-[#7e14ff]/40 rounded-full scale-150" />
       <span className="relative select-none" style={{ fontSize: size * 0.72, lineHeight: 1 }}>🧠</span>
-      {LOGO_BOLTS.map((b, i) => (
-        <Zap
-          key={i}
-          size={Math.round(size * b.scale)}
-          fill="white"
-          strokeWidth={1.5}
-          className="absolute text-white drop-shadow-[0_0_4px_rgba(255,255,255,0.9)]"
-          style={{ top: b.top, left: b.left, transform: `rotate(${b.rot}deg)` }}
-        />
-      ))}
-      {LOGO_SPARKLES.map((s, i) => (
-        <Sparkle
-          key={i}
-          size={Math.round(size * s.scale)}
-          fill="white"
-          className="absolute text-white drop-shadow-[0_0_3px_rgba(255,255,255,0.9)]"
-          style={{ top: s.top, left: s.left }}
-        />
-      ))}
     </div>
   );
 }
@@ -443,16 +401,16 @@ export default function App() {
               ) : (
                 sortedMemories.map((mem) => renderMemoryRow(mem))
               )}
-            </div>
 
-            <div className="px-4 pb-10 pt-2">
-              <button
-                onClick={() => setSettingsOpen(true)}
-                className={`p-3 rounded-full ${t.iconBtn}`}
-                title="הגדרות"
-              >
-                <Settings size={20} />
-              </button>
+              <div className="flex justify-end px-1 pt-3">
+                <button
+                  onClick={() => setSettingsOpen(true)}
+                  className={`p-3 rounded-full ${t.iconBtn}`}
+                  title="הגדרות"
+                >
+                  <Settings size={20} />
+                </button>
+              </div>
             </div>
           </div>
         )}
