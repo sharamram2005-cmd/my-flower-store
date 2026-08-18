@@ -4,6 +4,7 @@ import {
   UserRound, KeyRound, Phone, Mail, MapPin, CreditCard, BookMarked,
   Trash2, Copy, Check, ChevronRight, SquarePen, LayoutGrid, Eye, EyeOff,
 } from 'lucide-react';
+import BusinessTable from './BusinessTable.jsx';
 
 function BrainLogo({ size = 72 }) {
   return (
@@ -75,6 +76,7 @@ export default function App() {
   const [showLockInput, setShowLockInput] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [businessTableOpen, setBusinessTableOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null); // 'subjectSearch' | 'generalSearch' | 'pin' | 'identity' | 'detail'
   const [selectedMemoryId, setSelectedMemoryId] = useState(null);
@@ -388,7 +390,7 @@ export default function App() {
               </button>
 
               <button
-                onClick={() => showToast('בקרוב 🙂')}
+                onClick={() => { setMenuOpen(false); setBusinessTableOpen(true); }}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${t.row}`}
               >
                 <Plus size={18} className={t.iconColor} />
@@ -455,6 +457,9 @@ export default function App() {
             </div>
           </div>
         )}
+
+        {/* ================= BUSINESS TABLE (טבלת אקסל עסקית) ================= */}
+        {businessTableOpen && <BusinessTable onClose={() => setBusinessTableOpen(false)} />}
 
         {/* ================= SEARCH MODALS ================= */}
         {(activeModal === 'subjectSearch' || activeModal === 'generalSearch') && (
