@@ -13,7 +13,7 @@ function createEmptyRow() {
 }
 
 function createEmptyPriceRow() {
-  return { id: crypto.randomUUID(), name: '', costPrice: '', sellPrice: '' };
+  return { id: crypto.randomUUID(), name: '', costPrice: '', sellPrice: '', breakEvenQty: '' };
 }
 
 function defaultData() {
@@ -477,43 +477,62 @@ export default function BusinessTable({ onClose }) {
                 </div>
                 <div className="flex flex-col">
                   {(priceList[activeTabId] || []).map((item) => (
-                    <div key={item.id} className="grid grid-cols-2 md:grid-cols-[1fr_1fr_1fr_50px] border-b-4 md:border-b border-[#111] hover:bg-[#252525] transition-colors last:border-b-0 relative">
-                      <div className="col-span-2 md:col-span-1 border-b md:border-b-0 border-[#111]">
-                        <input
-                          type="text"
-                          value={item.name}
-                          onChange={(e) => handlePriceListChange(item.id, 'name', e.target.value)}
-                          className="w-full h-full min-h-[45px] bg-transparent text-center outline-none px-2 focus:bg-[#333] font-medium md:font-normal"
-                          placeholder="שם המוצר..."
-                        />
+                    <div key={item.id} className="border-b-4 md:border-b border-[#111] last:border-b-0">
+                      <div className="grid grid-cols-2 md:grid-cols-[1fr_1fr_1fr_50px] hover:bg-[#252525] transition-colors relative">
+                        <div className="col-span-2 md:col-span-1 border-b md:border-b-0 border-[#111]">
+                          <input
+                            type="text"
+                            value={item.name}
+                            onChange={(e) => handlePriceListChange(item.id, 'name', e.target.value)}
+                            className="w-full h-full min-h-[45px] bg-transparent text-center outline-none px-2 focus:bg-[#333] font-medium md:font-normal"
+                            placeholder="שם המוצר..."
+                          />
+                        </div>
+                        <div className="col-span-1 border-l border-[#111] bg-[#F44336]/5">
+                          <input
+                            type="text"
+                            dir="ltr"
+                            value={item.costPrice}
+                            onChange={(e) => handlePriceListChange(item.id, 'costPrice', e.target.value)}
+                            className="w-full h-full min-h-[45px] bg-transparent text-center outline-none px-2 text-[#F44336] font-bold focus:bg-[#F44336]/20 font-mono transition-colors"
+                            placeholder="עלות (₪)"
+                          />
+                        </div>
+                        <div className="col-span-1 border-l border-[#111] bg-[#4CAF50]/5">
+                          <input
+                            type="text"
+                            dir="ltr"
+                            value={item.sellPrice}
+                            onChange={(e) => handlePriceListChange(item.id, 'sellPrice', e.target.value)}
+                            className="w-full h-full min-h-[45px] bg-transparent text-center outline-none px-2 text-[#4CAF50] font-bold focus:bg-[#4CAF50]/20 font-mono transition-colors"
+                            placeholder="מכירה (₪)"
+                          />
+                        </div>
+                        <div className="absolute top-1 left-1 md:relative md:top-0 md:left-0 col-span-2 md:col-span-1 flex items-center justify-center pointer-events-none md:pointer-events-auto">
+                          <button
+                            onClick={() => handleRemovePriceListRow(item.id)}
+                            className="flex items-center justify-center p-2 text-gray-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors pointer-events-auto"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                       </div>
-                      <div className="col-span-1 border-l border-[#111] bg-[#F44336]/5">
-                        <input
-                          type="text"
-                          dir="ltr"
-                          value={item.costPrice}
-                          onChange={(e) => handlePriceListChange(item.id, 'costPrice', e.target.value)}
-                          className="w-full h-full min-h-[45px] bg-transparent text-center outline-none px-2 text-[#F44336] font-bold focus:bg-[#F44336]/20 font-mono transition-colors"
-                          placeholder="עלות (₪)"
-                        />
-                      </div>
-                      <div className="col-span-1 border-l border-[#111] bg-[#4CAF50]/5">
-                        <input
-                          type="text"
-                          dir="ltr"
-                          value={item.sellPrice}
-                          onChange={(e) => handlePriceListChange(item.id, 'sellPrice', e.target.value)}
-                          className="w-full h-full min-h-[45px] bg-transparent text-center outline-none px-2 text-[#4CAF50] font-bold focus:bg-[#4CAF50]/20 font-mono transition-colors"
-                          placeholder="מכירה (₪)"
-                        />
-                      </div>
-                      <div className="absolute top-1 left-1 md:relative md:top-0 md:left-0 col-span-2 md:col-span-1 flex items-center justify-center pointer-events-none md:pointer-events-auto">
-                        <button
-                          onClick={() => handleRemovePriceListRow(item.id)}
-                          className="flex items-center justify-center p-2 text-gray-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors pointer-events-auto"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+
+                      {/* כותרת מודגשת: כמה יחידות מהמוצר הזה צריך למכור כדי לא להפסיד */}
+                      <div className="flex items-center justify-between gap-2 px-3 py-2 bg-[#241f0a] border-t border-[#111]">
+                        <span className="text-xs font-bold text-amber-400 shrink-0">כמה צריך למכור כדי לא להפסיד:</span>
+                        <div className="flex items-center gap-1.5">
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            dir="ltr"
+                            value={item.breakEvenQty || ''}
+                            onChange={(e) => handlePriceListChange(item.id, 'breakEvenQty', e.target.value)}
+                            placeholder="0"
+                            className="w-16 text-center bg-transparent outline-none text-amber-300 placeholder:text-gray-600 placeholder:font-normal font-extrabold text-lg font-mono border-b border-amber-500/40 focus:border-amber-400 transition-colors"
+                          />
+                          <span className="text-xs text-gray-500">יח'</span>
+                        </div>
                       </div>
                     </div>
                   ))}
